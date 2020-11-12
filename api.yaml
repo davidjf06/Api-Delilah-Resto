@@ -1,565 +1,569 @@
----
-swagger: 2.0
+swagger: '2.0'
 info:
-  description: Esta API esta construida para un sistema de pedidos de comidas on line
   version: 1.0.0
   title: API Proyecto Delilah Resto
+  description: Esta API esta construida para un sistema de pedidos de comidas on line
   contact:
-    email: davidjf06@gmail.com
+    email: "davidjf06@gmail.com"
 tags:
-- name: login
-  description: Logueo de usuarios.
-- name: usuario
-  description: Operaciones relacionadas con el usuario.
-- name: producto
-  description: Todo lo referido a los productos.
-- name: pedido
-  description: Acceso a los pedidos de Delilah Resto.
-- name: producto x pedido
-  description: Ingreso de productos a Pedidos.
+- name: "login"
+  description: "Logueo de usuarios."
+- name: "usuario"
+  description: "Operaciones relacionadas con el usuario."
+- name: "producto"
+  description: "Todo lo referido a los productos."
+- name: "pedido"
+  description: "Acceso a los pedidos de Delilah Resto."
+- name: "producto x pedido"
+  description: "Ingreso de productos a Pedidos."
 paths:
   /login:
     post:
-      summary: Loguear usuario
+      summary: "Loguear usuario"
       description: ""
-      operationId: loginUser
+      operationId: "loginUser"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: body
-        name: body
-        description: Se valida el usuario a través del email y el password.
+      - in: "body"
+        name: "body"
+        description: "Se valida el usuario a través del email y el password."
         required: true
         schema:
-          $ref: '#/definitions/UsuarioL'
+          $ref: "#/definitions/UsuarioL"
       responses:
         "200":
-          description: OK
+          description: "OK"
           schema:
-            type: string
+            type: "string"
+            
   /usuarios:
-    get:
-      tags:
-      - usuario
-      summary: Mostrar usuarios.
-      description: Muestra todos los usuarios disponibles separados por coma.
-      operationId: getusers
-      parameters: []
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Usuario'
-        "400":
-          description: No se pueden visualizar usuarios.
-        "401":
-          description: Token inexistente.
-        "403":
-          description: Debe iniciar sesión.
     post:
       tags:
-      - usuario
-      summary: Crear usuario.
-      description: Creación de objeto usuario en la base de datos.
-      operationId: createUser
+      - "usuario"
+      summary: "Crear usuario."
+      description: "Creación de objeto usuario en la base de datos."
+      operationId: "createUser"
       produces:
-      - application/xml
-      - application/json
+      - "application/xml"
+      - "application/json"
       parameters:
-      - in: body
-        name: body
-        description: Objeto usuario creado (El campo id_usuario se completa  automáticamente y el campo es_admin por defecto es 0).
+      - in: "body"
+        name: "body"
+        description: "Objeto usuario creado (El campo id_usuario se completa  automáticamente y el campo es_admin por defecto es 0)."
         required: true
         schema:
-          $ref: '#/definitions/Usuario'
+          $ref: "#/definitions/Usuario"
       responses:
         "200":
-          description: Usuario agregado a la base de datos.
+          description: "Usuario agregado a la base de datos."
         "400":
-          description: No se pudo agregar el Usuario.
+          description: "No se pudo agregar el Usuario."
         "403":
-          description: Usuario ya existente. Elija otro.
-  /usuarios/{id}:
+          description: "Usuario ya existente. Elija otro."
     get:
       tags:
-      - usuario
-      summary: Mostrar usuario por id.
-      description: Muestra el usuario correspondiente al id del path.
-      operationId: findusersById
-      parameters:
-      - name: id
-        in: path
-        description: Id_usuario
-        required: true
-        type: integer
-        format: int64
+      - "usuario"
+      summary: "Mostrar usuarios."
+      description: "Muestra todos los usuarios disponibles separados por coma."
+      operationId: "getusers"
       responses:
         "200":
-          description: OK
+          description: "OK"
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Usuario'
+              type: "array"
+              items:
+                $ref: "#/definitions/Usuario"
         "400":
-          description: No se puede mostrar el usuario.
+          description: "No se pueden visualizar usuarios."
+        "401":
+          description: "Token inexistente."
         "403":
-          description: Token inexistente.
+          description: "Debe iniciar sesión." 
+  /usuarios/{id}: 
+    get:
+      tags:
+      - "usuario"
+      summary: "Mostrar usuario por id."
+      description: "Muestra el usuario correspondiente al id del path."
+      operationId: "findusersById"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id_usuario"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Usuario"
+        "400":
+          description: "No se puede mostrar el usuario."
+        "403":
+          description: "Token inexistente."
+        
     put:
       tags:
-      - usuario
-      summary: Actualizar Usuario
-      description: Actualiza los datos del Usuario.
-      operationId: updateUser
+      - "usuario"
+      summary: "Actualizar Usuario"
+      description: "Actualiza los datos del Usuario."
+      operationId: "updateUser"
       consumes:
-      - application/json
-      - application/xml
+      - "application/json"
+      - "application/xml"
       produces:
-      - application/xml
-      - application/json
+      - "application/xml"
+      - "application/json"
       parameters:
-      - name: id
-        in: path
-        description: Id_producto
+      - name: "id"
+        in: "path"
+        description: "Id_producto"
         required: true
-        type: integer
-        format: int64
-      - in: body
-        name: body
-        description: Datos de usuario que desee actualizar en la base de datos. (El campo es_admin sólo está disponible aquí).
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Datos de usuario que desee actualizar en la base de datos. (El campo es_admin sólo está disponible aquí)."
         required: true
         schema:
-          $ref: '#/definitions/Usuario'
+          $ref: "#/definitions/Usuario"
       responses:
         "200":
-          description: Usuario actualizado correctamente.
+          description: "Usuario actualizado correctamente."
         "400":
-          description: No se modificó el usuario.
+          description: "No se modificó el usuario."
         "401":
-          description: Token inexistente.
+          description: "Token inexistente."
         "403":
-          description: No tiene permisos de Administrador.
+          description: "No tiene permisos de Administrador."
     delete:
       tags:
-      - usuario
-      summary: Eliminar usuario por id
-      description: Eliminar el usuario de la base de datos por Id del path.
-      operationId: deleteUsersById
+      - "usuario"
+      summary: "Eliminar usuario por id"
+      description: "Eliminar el usuario de la base de datos por Id del path."
+      operationId: "deleteUsersById"
       parameters:
-      - name: id
-        in: path
-        description: Id_usuario
+      - name: "id"
+        in: "path"
+        description: "Id_usuario"
         required: true
-        type: integer
-        format: int64
+        type: "integer"
+        format: "int64"
       responses:
         "200":
-          description: Usuario eliminado correctamente.
+          description: "Usuario eliminado correctamente."
         "400":
-          description: No se puedo eliminar el usuario.
+          description: "No se puedo eliminar el usuario."
         "403":
-          description: No tiene permisos de Administrador.
+          description: "No tiene permisos de Administrador."
         "404":
-          description: Usuario inexistente.
+          description: "Usuario inexistente."
+          
   /productos:
-    get:
-      tags:
-      - producto
-      summary: Mostrar productos.
-      description: Muestra todos los productos disponibles separados por coma.
-      operationId: getproducts
-      parameters: []
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Producto'
-        "400":
-          description: No se pueden visualizar productos.
-        "401":
-          description: Token inexistente.
-        "403":
-          description: Debe iniciar sesión.
     post:
       tags:
-      - producto
-      summary: Agregar producto.
-      description: Agrega un nuevo objeto producto a la base de datos.
-      operationId: addProduct
+      - "producto"
+      summary: "Agregar producto."
+      description: "Agrega un nuevo objeto producto a la base de datos."
+      operationId: "addProduct"
       consumes:
-      - application/json
-      - application/xml
+      - "application/json"
+      - "application/xml"
       produces:
-      - application/xml
-      - application/json
+      - "application/xml"
+      - "application/json"
       parameters:
-      - in: body
-        name: body
-        description: Objeto producto que desee agregar a la base de datos. (El campo id_producto se completa automáticamente)
+      - in: "body"
+        name: "body"
+        description: "Objeto producto que desee agregar a la base de datos. (El campo id_producto se completa automáticamente)"
         required: true
         schema:
-          $ref: '#/definitions/Producto'
+          $ref: "#/definitions/Producto"
       responses:
         "200":
-          description: Producto agregado a la base de datos.
+          description: "Producto agregado a la base de datos."
         "400":
-          description: No se pudo agregar el producto.
+          description: "No se pudo agregar el producto."
         "401":
-          description: Token inexistente.
+          description: "Token inexistente."
         "403":
-          description: Forbidden o No tiene permisos de Administrador.
+          description: "Forbidden o No tiene permisos de Administrador."
+    get:
+      tags:
+      - "producto"
+      summary: "Mostrar productos."
+      description: "Muestra todos los productos disponibles separados por coma."
+      operationId: "getproducts"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Producto"
+        "400":
+          description: "No se pueden visualizar productos."
+        "401":
+          description: "Token inexistente."
+        "403":
+          description: "Debe iniciar sesión."  
   /productos/{id}:
     get:
       tags:
-      - producto
-      summary: Mostrar producto por id
-      description: Muestra el producto correspondiente al id del path.
-      operationId: findProductsById
+      - "producto"
+      summary: "Mostrar producto por id"
+      description: "Muestra el producto correspondiente al id del path."
+      operationId: "findProductsById"
       parameters:
-      - name: id
-        in: path
-        description: Id_producto
+      - name: "id"
+        in: "path"
+        description: "Id_producto"
         required: true
-        type: integer
-        format: int64
+        type: "integer"
+        format: "int64"
       responses:
         "200":
-          description: OK
+          description: "OK"
           schema:
-            type: array
+            type: "array"
             items:
-              $ref: '#/definitions/Producto'
+              $ref: "#/definitions/Producto"
         "400":
-          description: No se puede mostrar el producto
+          description: "No se puede mostrar el producto"
         "403":
-          description: Debe iniciar sesión
+          description: "Debe iniciar sesión"
         "404":
-          description: No existe el producto
+          description: "No existe el producto"
     put:
       tags:
-      - producto
-      summary: Actualizar producto
-      description: Actualiza los datos del producto
-      operationId: updateProduct
-      consumes:
-      - application/json
-      - application/xml
-      produces:
-      - application/xml
-      - application/json
+      - "producto"
+      summary: "Actualizar producto"
+      description: "Actualiza los datos del producto"
+      operationId: "updateProduct"
       parameters:
-      - name: id
-        in: path
-        description: Id_producto
+      - name: "id"
+        in: "path"
+        description: "Id_producto"
         required: true
-        type: integer
-        format: int64
-      - in: body
-        name: body
-        description: Objeto producto que desee actualizar en la base de datos.
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Objeto producto que desee actualizar en la base de datos."
         required: true
         schema:
-          $ref: '#/definitions/Producto'
+          $ref: "#/definitions/Producto"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
       responses:
         "200":
-          description: Producto actualizado.
+          description: "Producto actualizado."
         "400":
-          description: No se pudo actualizar el producto.
+          description: "No se pudo actualizar el producto."
         "401":
-          description: Token inexistente.
+          description: "Token inexistente."
         "403":
-          description: Forbidden o No tiene permisos de Administrador.
+          description: "Forbidden o No tiene permisos de Administrador." 
     delete:
       tags:
-      - producto
-      summary: Eliminar producto por id
-      description: Eliminar el producto de la base de datos por Id.
-      operationId: deleteProductsById
+      - "producto"
+      summary: "Eliminar producto por id"
+      description: "Eliminar el producto de la base de datos por Id."
+      operationId: "deleteProductsById"
       parameters:
-      - name: id
-        in: path
-        description: Id_producto
+      - name: "id"
+        in: "path"
+        description: "Id_producto"
         required: true
-        type: integer
-        format: int64
+        type: "integer"
+        format: "int64"
       responses:
         "200":
-          description: Producto eliminado correctamente.
+          description: "Producto eliminado correctamente."
         "400":
-          description: No se pudo eliminar el producto.
+          description: "No se pudo eliminar el producto."
         "403":
-          description: No tiene permisos de Administrador.
+          description: "No tiene permisos de Administrador."
         "404":
-          description: Producto inexistente.
+          description: "Producto inexistente."
+  
   /pedidos:
-    get:
-      tags:
-      - pedido
-      summary: Mostrar pedidos.
-      description: Muestra todos los pedidos disponibles separados por coma.
-      operationId: getOrders
-      parameters: []
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Pedido'
-        "400":
-          description: No se pueden visualizar los pedidos.
-        "401":
-          description: Token inexistente.
-        "403":
-          description: Debe iniciar sesión.
     post:
       tags:
-      - pedido
-      summary: Agregar pedido.
-      description: Agrega un nuevo objeto pedido a la base de datos.
-      operationId: addOrder
+      - "pedido"
+      summary: "Agregar pedido."
+      description: "Agrega un nuevo objeto pedido a la base de datos."
+      operationId: "addOrder"
       consumes:
-      - application/json
-      - application/xml
+      - "application/json"
+      - "application/xml"
       produces:
-      - application/xml
-      - application/json
+      - "application/xml"
+      - "application/json"
       parameters:
-      - in: body
-        name: body
-        description: Objeto pedido que desee agregar a la base de datos. (El campo id_pedido se completa automáticamente y el campo estado es 'Nuevo' por defecto).
+      - in: "body"
+        name: "body"
+        description: "Objeto pedido que desee agregar a la base de datos. (El campo id_pedido se completa automáticamente y el campo estado es 'Nuevo' por defecto)."
         required: true
         schema:
-          $ref: '#/definitions/Pedido'
+          $ref: "#/definitions/Pedido"
       responses:
         "200":
-          description: Pedido agregado a correctamente.
+          description: "Pedido agregado a correctamente."
         "400":
-          description: Faltan campos obligatorios.
+          description: "Faltan campos obligatorios."
         "401":
-          description: Token inexistente.
+          description: "Token inexistente."
         "403":
-          description: No tiene permisos de Administrador.
+          description: "No tiene permisos de Administrador."
         "404":
-          description: No se pudo agregar el pedido.
-  /pedidos/{id}:
+          description: "No se pudo agregar el pedido."
     get:
       tags:
-      - pedido
-      summary: Mostrar pedido por id
-      description: Muestra el pedido correspondiente al id del path.
-      operationId: findOrdersById
-      parameters:
-      - name: id
-        in: path
-        description: Id_pedido
-        required: true
-        type: integer
-        format: int64
+      - "pedido"
+      summary: "Mostrar pedidos."
+      description: "Muestra todos los pedidos disponibles separados por coma."
+      operationId: "getOrders"
       responses:
         "200":
-          description: OK
+          description: "OK"
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Pedido'
+              type: "array"
+              items:
+                $ref: "#/definitions/Pedido"
         "400":
-          description: No se puede mostrar el pedido.
+          description: "No se pueden visualizar los pedidos."
+        "401":
+          description: "Token inexistente."
         "403":
-          description: Debe iniciar sesión.
+          description: "Debe iniciar sesión."      
+  /pedidos/{id}:  
+    get:
+      tags:
+      - "pedido"
+      summary: "Mostrar pedido por id"
+      description: "Muestra el pedido correspondiente al id del path."
+      operationId: "findOrdersById"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id_pedido"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Pedido"
+        "400":
+          description: "No se puede mostrar el pedido."
+        "403":
+          description: "Debe iniciar sesión."
         "404":
-          description: No existe el pedido.
+          description: "No existe el pedido."
     put:
       tags:
-      - pedido
-      summary: Actualizar pedido.
-      description: Actualiza los datos del pedido
-      operationId: updateOrder
-      consumes:
-      - application/json
-      - application/xml
-      produces:
-      - application/xml
-      - application/json
+      - "pedido"
+      summary: "Actualizar pedido."
+      description: "Actualiza los datos del pedido"
+      operationId: "updateOrder"
       parameters:
-      - name: id
-        in: path
-        description: Id_pedido
+      - name: "id"
+        in: "path"
+        description: "Id_pedido"
         required: true
-        type: integer
-        format: int64
-      - in: body
-        name: body
-        description: Objeto pedido que desee actualizar en la base de datos. (Además del estado se puede actualizar los demás campos).
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Objeto pedido que desee actualizar en la base de datos. (Además del estado se puede actualizar los demás campos)."
         required: true
         schema:
-          $ref: '#/definitions/Pedido'
+          $ref: "#/definitions/Pedido"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
       responses:
         "200":
-          description: Pedido actualizado correctamente.
+          description: "Pedido actualizado correctamente."
         "400":
-          description: No se pudo actualizar el pedido.
+          description: "No se pudo actualizar el pedido."
         "401":
-          description: Token inexistente.
+          description: "Token inexistente."
         "403":
-          description: No tiene permisos de Administrador.
+          description: "No tiene permisos de Administrador." 
     delete:
       tags:
-      - pedido
-      summary: Eliminar pedido por id.
-      description: Eliminar el pedido de la base de datos por Id.
-      operationId: deleteOrdersById
+      - "pedido"
+      summary: "Eliminar pedido por id."
+      description: "Eliminar el pedido de la base de datos por Id."
+      operationId: "deleteOrdersById"
       parameters:
-      - name: id
-        in: path
-        description: Id_pedido
+      - name: "id"
+        in: "path"
+        description: "Id_pedido"
         required: true
-        type: integer
-        format: int64
+        type: "integer"
+        format: "int64"
       responses:
         "200":
-          description: Pedido eliminado correctamente.
+          description: "Pedido eliminado correctamente."
         "400":
-          description: No se pudo eliminar el pedido.
+          description: "No se pudo eliminar el pedido."
         "403":
-          description: No tiene permisos de Administrador.
+          description: "No tiene permisos de Administrador."
   /productos_x_pedidos:
     post:
       tags:
-      - producto x pedido
-      summary: Agregar Producto a un pedido.
-      description: Agrega un nuevo objeto producto a un pedido de la base de datos.
-      operationId: addProductByOrder
+      - "producto x pedido"
+      summary: "Agregar Producto a un pedido."
+      description: "Agrega un nuevo objeto producto a un pedido de la base de datos."
+      operationId: "addProductByOrder"
       consumes:
-      - application/json
-      - application/xml
+      - "application/json"
+      - "application/xml"
       produces:
-      - application/xml
-      - application/json
+      - "application/xml"
+      - "application/json"
       parameters:
-      - in: body
-        name: body
-        description: Objeto producto_x_pedido define la cantidad de productos, el id del producto y el id del pedido. El campo id_producto_x_pedido se completa automáticamente.
+      - in: "body"
+        name: "body"
+        description: "Objeto producto_x_pedido define la cantidad de productos, el id del producto y el id del pedido. El campo id_producto_x_pedido se completa automáticamente."
         required: true
         schema:
-          $ref: '#/definitions/Producto_x_pedido'
+          $ref: "#/definitions/Producto_x_pedido"
       responses:
         "200":
-          description: Producto agregado correctamente al pedido.
+          description: "Producto agregado correctamente al pedido."
         "400":
-          description: No se pudo agregar el producto al pedido.
+          description: "No se pudo agregar el producto al pedido."
         "401":
-          description: Token inexistente.
+          description: "Token inexistente."
         "403":
-          description: Debe iniciar sesión.
+          description: "Debe iniciar sesión."
+  
 definitions:
   Pedido:
-    type: object
+    type: "object"
     properties:
       id_pedido:
-        type: integer
-        format: int64
+        type: "integer"
+        format: "int64"
         example: 12
       hora:
-        type: string
-        format: date-time
-        example: 2020-11-01 20:00:00
+        type: "string"
+        format: "date-time"
+        example: "2020-11-01 20:00:00"
       estado:
-        type: string
-        example: Entregado
-        default: Nuevo
+        type: "string"
+        example: "Entregado"
+        default: "Nuevo"
       total:
-        type: integer
-        format: int64
-        example: 256
+        type: "integer"
+        format: "int64"
+        example: "256"
       metodo_pago:
-        type: string
-        example: efectivo
+        type: "string"
+        example: "efectivo"
       id_usuario:
-        type: integer
-        format: int64
+        type: "integer"
+        format: "int64"
         example: 13
     xml:
-      name: Pedido
+      name: "Pedido"
   Usuario:
-    type: object
+    type: "object"
     properties:
       id_usuario:
-        type: integer
-        format: int64
+        type: "integer"
+        format: "int64"
         example: 14
       nombre_usuario:
-        type: string
-        example: davidjf_06
+        type: "string"
+        example: "davidjf_06"
       nombre_apellido:
-        type: string
-        example: David Farias
+        type: "string"
+        example: "David Farias"
       email:
-        type: string
-        example: davidfarias@gmail.com
+        type: "string"
+        example: "davidfarias@gmail.com"
       telefono:
-        type: integer
-        format: int32
+        type: "integer"
+        format: "int32"
         example: 123456789
       direccion:
-        type: string
-        example: Calle 123
+        type: "string"
+        example: "Calle 123"
       contrasena:
-        type: string
-        example: David123
+        type: "string"
+        example: "David123"
       es_admin:
-        type: integer
-        format: int32
-        description: Solo para el Administrador
+        type: "integer"
+        format: "int32"
+        description: "Solo para el Administrador"
         default: 0
     xml:
-      name: Usuario
+      name: "Usuario"
   UsuarioL:
-    type: object
+    type: "object"
     properties:
       email:
-        type: string
+        type: "string"
       contrasena:
-        type: string
+        type: "string"
   Producto_x_pedido:
-    type: object
+    type: "object"
     properties:
       id_pro_pe:
-        type: integer
-        format: int64
+        type: "integer"
+        format: "int64"
         example: 11
       id_producto:
-        type: integer
-        format: int64
+        type: "integer"
+        format: "int64"
         example: 10
       id_pedido:
-        type: integer
-        format: int64
+        type: "integer"
+        format: "int64"
         example: 12
       cantidad:
-        type: integer
-        format: int64
+        type: "integer"
+        format: "int64"
         example: 3
     xml:
-      name: Producto_x_pedido
+      name: "Producto_x_pedido"
   Producto:
-    type: object
+    type: "object"
+    required:
+    - "name"
+    - "photoUrls"
     properties:
       id_producto:
-        type: integer
-        format: int64
+        type: "integer"
+        format: "int64"
         example: 10
       nombre:
-        type: string
-        example: Bagel de salmon
+        type: "string"
+        example: "Bagel de salmon"
       imagen:
-        type: string
-        example: http://delilah/imagenes/bagelsalmon.jpg
+        type: "string"
+        example: "http://delilah/imagenes/bagelsalmon.jpg"
       precio:
-        type: integer
+        type: "integer"
         example: 425
     xml:
-      name: Producto
+      name: "Producto"
